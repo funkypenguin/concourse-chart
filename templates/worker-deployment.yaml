@@ -52,6 +52,9 @@ spec:
       {{- if .Values.worker.priorityClassName }}
       priorityClassName: {{ .Values.worker.priorityClassName }}
       {{- end }}
+      {{- if .Values.worker.runtimeClassName }}
+      runtimeClassName: {{ .Values.worker.runtimeClassName }}
+      {{- end }}
       {{- if .Values.worker.terminationGracePeriodSeconds }}
       terminationGracePeriodSeconds: {{ .Values.worker.terminationGracePeriodSeconds }}
       {{- end }}
