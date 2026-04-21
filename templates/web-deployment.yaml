@@ -680,6 +680,10 @@ spec:
             - name: CONCOURSE_VAULT_QUERY_TIMEOUT
               value: {{ .Values.concourse.web.vault.queryTimeout | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.vault.enableKvMountCache }}
+            - name: CONCOURSE_VAULT_ENABLE_KV_MOUNT_CACHE
+              value: {{ .Values.concourse.web.vault.enableKvMountCache | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.vault.serverName }}
             - name: CONCOURSE_VAULT_SERVER_NAME
               value: {{ .Values.concourse.web.vault.serverName | quote }}
