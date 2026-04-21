@@ -707,7 +707,7 @@ concourse:
       ##
       queryTimeout:
 
-      ## Enable caching of KV mount metadata from Vault. This reduces Vault API calls 
+      ## Enable caching of KV mount metadata from Vault. This reduces Vault API calls
       ## by fetching mount information once and reusing it for subsequent lookups.
       ##
       enableKvMountCache: false
@@ -3297,10 +3297,15 @@ secrets:
   postgresClientCert:
   postgresClientKey:
 
-  ## Secrets for DB encryption
+  ## Pasphrase for DB encryption. A 16 or 32 byte key that will be used to
+  ## generate an AES key to encrypt sensitive data in the DB.
   ##
   encryptionKey:
+  encryptionKeyBase64:
+  encryptionKeyHex:
   oldEncryptionKey:
+  oldEncryptionKeyBase64:
+  oldEncryptionKeyHex:
 
   ## Secrets for SSM AWS access
   ##
