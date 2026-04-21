@@ -298,6 +298,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.tolerations` | Tolerations for the web nodes | `[]` |
 | `web.vaultSecretsPath` | Specify the mount directory of the web vault secrets | `/concourse-vault` |
 | `web.vault.tokenPath` | Specify the path to a file containing a vault client authentication token | `nil` |
+| `web.vault.enableKvMountCache` | Enable caching of KV mount metadata from Vault | `false` |
 | `web.securityContext` | Security context for the web container | `nil` |
 | `web.peerAddressUseIPv6` | Set to true if the cluster uses IPv6. Wraps the pod IP in square brackets for CONCOURSE_PEER_ADDRESS | `false` |
 | `web.teamSecretsPath` | Specify the mount directory of the team authorized keys secrets | `/team-authorized-keys` |

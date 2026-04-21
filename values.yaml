@@ -707,6 +707,11 @@ concourse:
       ##
       queryTimeout:
 
+      ## Enable caching of KV mount metadata from Vault. This reduces Vault API calls 
+      ## by fetching mount information once and reusing it for subsequent lookups.
+      ##
+      enableKvMountCache: false
+
     ## Configuration for using Credhub as a credential manager.
     ## Ref: https://concourse-ci.org/credhub-credential-manager.html
     ##
