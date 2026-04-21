@@ -362,17 +362,47 @@ spec:
               value: {{ .Values.concourse.web.oidcIssuerUrl | quote }}
             {{- end }}
             {{- if .Values.concourse.web.encryption.enabled }}
+            {{- if .Values.secrets.encryptionKey }}
             - name: CONCOURSE_ENCRYPTION_KEY
               valueFrom:
                 secretKeyRef:
                   name: {{ template "concourse.web.fullname" . }}
                   key: encryption-key
+            {{- end }}
+            {{- if .Values.secrets.encryptionKeyBase64 }}
+            - name: CONCOURSE_ENCRYPTION_KEY_BASE64
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "concourse.web.fullname" . }}
+                  key: encryption-key-base64
+            {{- end }}
+            {{- if .Values.secrets.encryptionKeyHex }}
+            - name: CONCOURSE_ENCRYPTION_KEY_HEX
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "concourse.web.fullname" . }}
+                  key: encryption-key-hex
+            {{- end }}
             {{- if .Values.secrets.oldEncryptionKey }}
             - name: CONCOURSE_OLD_ENCRYPTION_KEY
               valueFrom:
                 secretKeyRef:
                   name: {{ template "concourse.web.fullname" . }}
                   key: old-encryption-key
+            {{- end }}
+            {{- if .Values.secrets.oldEncryptionKeyBase64 }}
+            - name: CONCOURSE_OLD_ENCRYPTION_KEY_BASE64
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "concourse.web.fullname" . }}
+                  key: old-encryption-key-base64
+            {{- end }}
+            {{- if .Values.secrets.oldEncryptionKeyHex }}
+            - name: CONCOURSE_OLD_ENCRYPTION_KEY_HEX
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "concourse.web.fullname" . }}
+                  key: old-encryption-key-hex
             {{- end }}
             {{- end }}
             {{- if .Values.concourse.web.streamingArtifactsCompression }}
