@@ -127,6 +127,10 @@ spec:
             - name: CONCOURSE_DEFAULT_TASK_TIMEOUT
               value: {{ .Values.concourse.web.defaultTaskTimeout | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.defaultTaskCacheTTL }}
+            - name: CONCOURSE_DEFAULT_TASK_CACHE_TTL
+              value: {{ .Values.concourse.web.defaultTaskCacheTTL | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.numGoroutineThreshold }}
             - name: CONCOURSE_NUM_GOROUTINE_THRESHOLD
               value: {{ .Values.concourse.web.numGoroutineThreshold | quote }}
