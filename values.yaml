@@ -94,6 +94,12 @@ concourse:
     ##
     defaultTaskTimeout:
 
+    ## Default TTL for task caches. By default, task caches have no TTL.
+    ##
+    ## Example: 14h
+    ##
+    defaultTaskCacheTTL:
+
     ## Work will be distributed to other ATCs when this number of go routines is reached.
     ##
     ## Example: 50000
