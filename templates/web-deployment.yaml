@@ -1097,6 +1097,18 @@ spec:
             - name: CONCOURSE_MAIN_TEAM_GITLAB_GROUP
               value: {{ .Values.concourse.web.auth.mainTeam.gitlab.group | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.auth.mainTeam.gitea.user }}
+            - name: CONCOURSE_MAIN_TEAM_GITEA_USER
+              value: {{ .Values.concourse.web.auth.mainTeam.gitea.user | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.auth.mainTeam.gitea.org }}
+            - name: CONCOURSE_MAIN_TEAM_GITEA_ORG
+              value: {{ .Values.concourse.web.auth.mainTeam.gitea.org | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.auth.mainTeam.gitea.team }}
+            - name: CONCOURSE_MAIN_TEAM_GITEA_TEAM
+              value: {{ .Values.concourse.web.auth.mainTeam.github.team | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.auth.mainTeam.ldap.user }}
             - name: CONCOURSE_MAIN_TEAM_LDAP_USER
               value: {{ .Values.concourse.web.auth.mainTeam.ldap.user | quote }}
@@ -1199,6 +1211,26 @@ spec:
             {{- if .Values.concourse.web.auth.gitlab.host }}
             - name: CONCOURSE_GITLAB_HOST
               value: {{ .Values.concourse.web.auth.gitlab.host | quote }}
+            {{- end }}
+            {{- end }}
+            {{- if .Values.concourse.web.auth.gitea.enabled }}
+            - name: CONCOURSE_GITEA_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "concourse.web.fullname" . }}
+                  key: gitea-client-id
+            - name: CONCOURSE_GITEA_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "concourse.web.fullname" . }}
+                  key: gitea-client-secret
+            {{- if .Values.concourse.web.auth.gitea.host }}
+            - name: CONCOURSE_GITEA_HOST
+              value: {{ .Values.concourse.web.auth.gitea.host | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.auth.gitea.displayName }}
+            - name: CONCOURSE_GITEA_DISPLAY_NAME
+              value: {{ .Values.concourse.web.auth.gitea.displayName | quote }}
             {{- end }}
             {{- end }}
             {{- if .Values.concourse.web.auth.ldap.enabled }}

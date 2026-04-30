@@ -1250,6 +1250,21 @@ concourse:
           ##
           group:
 
+        ## Authentication (Main Team) (Gitea)
+        ##
+        gitea:
+          ## Comma-separated allow list of Gitea users.
+          ##
+          user:
+
+          ## Comma-separated allow list of Gitea orgs.
+          ##
+          org:
+
+          ## Comma-separated allow list of Gitea teams.
+          ##
+          team:
+
         ## Authentication (Main Team) (LDAP)
         ##
         ldap:
@@ -1350,6 +1365,19 @@ concourse:
         ## Hostname of Gitlab Enterprise deployment (Include scheme, No trailing slash)
         ##
         host:
+
+      ## Authentication (Gitea)
+      gitea:
+        enabled: false
+
+        ## Hostname of Gitea deployment (Include scheme, No trailing slash)
+        ##
+        host:
+
+        ## The auth provider name displayed to users on the login page.
+        ## Defaults to "Gitea"
+        ##
+        displayName:
 
       ## Authentication (LDAP)
       ldap:
