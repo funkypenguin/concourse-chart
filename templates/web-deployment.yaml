@@ -127,6 +127,10 @@ spec:
             - name: CONCOURSE_DEFAULT_TASK_TIMEOUT
               value: {{ .Values.concourse.web.defaultTaskTimeout | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.defaultTaskCacheTTL }}
+            - name: CONCOURSE_DEFAULT_TASK_CACHE_TTL
+              value: {{ .Values.concourse.web.defaultTaskCacheTTL | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.numGoroutineThreshold }}
             - name: CONCOURSE_NUM_GOROUTINE_THRESHOLD
               value: {{ .Values.concourse.web.numGoroutineThreshold | quote }}
@@ -362,17 +366,47 @@ spec:
               value: {{ .Values.concourse.web.oidcIssuerUrl | quote }}
             {{- end }}
             {{- if .Values.concourse.web.encryption.enabled }}
+            {{- if .Values.secrets.encryptionKey }}
             - name: CONCOURSE_ENCRYPTION_KEY
               valueFrom:
                 secretKeyRef:
                   name: {{ template "concourse.web.fullname" . }}
                   key: encryption-key
+            {{- end }}
+            {{- if .Values.secrets.encryptionKeyBase64 }}
+            - name: CONCOURSE_ENCRYPTION_KEY_BASE64
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "concourse.web.fullname" . }}
+                  key: encryption-key-base64
+            {{- end }}
+            {{- if .Values.secrets.encryptionKeyHex }}
+            - name: CONCOURSE_ENCRYPTION_KEY_HEX
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "concourse.web.fullname" . }}
+                  key: encryption-key-hex
+            {{- end }}
             {{- if .Values.secrets.oldEncryptionKey }}
             - name: CONCOURSE_OLD_ENCRYPTION_KEY
               valueFrom:
                 secretKeyRef:
                   name: {{ template "concourse.web.fullname" . }}
                   key: old-encryption-key
+            {{- end }}
+            {{- if .Values.secrets.oldEncryptionKeyBase64 }}
+            - name: CONCOURSE_OLD_ENCRYPTION_KEY_BASE64
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "concourse.web.fullname" . }}
+                  key: old-encryption-key-base64
+            {{- end }}
+            {{- if .Values.secrets.oldEncryptionKeyHex }}
+            - name: CONCOURSE_OLD_ENCRYPTION_KEY_HEX
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "concourse.web.fullname" . }}
+                  key: old-encryption-key-hex
             {{- end }}
             {{- end }}
             {{- if .Values.concourse.web.streamingArtifactsCompression }}
@@ -679,6 +713,10 @@ spec:
             {{- if .Values.concourse.web.vault.queryTimeout }}
             - name: CONCOURSE_VAULT_QUERY_TIMEOUT
               value: {{ .Values.concourse.web.vault.queryTimeout | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.vault.enableKvMountCache }}
+            - name: CONCOURSE_VAULT_ENABLE_KV_MOUNT_CACHE
+              value: {{ .Values.concourse.web.vault.enableKvMountCache | quote }}
             {{- end }}
             {{- if .Values.concourse.web.vault.serverName }}
             - name: CONCOURSE_VAULT_SERVER_NAME
@@ -1059,6 +1097,18 @@ spec:
             - name: CONCOURSE_MAIN_TEAM_GITLAB_GROUP
               value: {{ .Values.concourse.web.auth.mainTeam.gitlab.group | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.auth.mainTeam.gitea.user }}
+            - name: CONCOURSE_MAIN_TEAM_GITEA_USER
+              value: {{ .Values.concourse.web.auth.mainTeam.gitea.user | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.auth.mainTeam.gitea.org }}
+            - name: CONCOURSE_MAIN_TEAM_GITEA_ORG
+              value: {{ .Values.concourse.web.auth.mainTeam.gitea.org | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.auth.mainTeam.gitea.team }}
+            - name: CONCOURSE_MAIN_TEAM_GITEA_TEAM
+              value: {{ .Values.concourse.web.auth.mainTeam.github.team | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.auth.mainTeam.ldap.user }}
             - name: CONCOURSE_MAIN_TEAM_LDAP_USER
               value: {{ .Values.concourse.web.auth.mainTeam.ldap.user | quote }}
@@ -1161,6 +1211,26 @@ spec:
             {{- if .Values.concourse.web.auth.gitlab.host }}
             - name: CONCOURSE_GITLAB_HOST
               value: {{ .Values.concourse.web.auth.gitlab.host | quote }}
+            {{- end }}
+            {{- end }}
+            {{- if .Values.concourse.web.auth.gitea.enabled }}
+            - name: CONCOURSE_GITEA_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "concourse.web.fullname" . }}
+                  key: gitea-client-id
+            - name: CONCOURSE_GITEA_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "concourse.web.fullname" . }}
+                  key: gitea-client-secret
+            {{- if .Values.concourse.web.auth.gitea.host }}
+            - name: CONCOURSE_GITEA_HOST
+              value: {{ .Values.concourse.web.auth.gitea.host | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.auth.gitea.displayName }}
+            - name: CONCOURSE_GITEA_DISPLAY_NAME
+              value: {{ .Values.concourse.web.auth.gitea.displayName | quote }}
             {{- end }}
             {{- end }}
             {{- if .Values.concourse.web.auth.ldap.enabled }}

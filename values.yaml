@@ -94,6 +94,12 @@ concourse:
     ##
     defaultTaskTimeout:
 
+    ## Default TTL for task caches. By default, task caches have no TTL.
+    ##
+    ## Example: 14h
+    ##
+    defaultTaskCacheTTL:
+
     ## Work will be distributed to other ATCs when this number of go routines is reached.
     ##
     ## Example: 50000
@@ -707,6 +713,11 @@ concourse:
       ##
       queryTimeout:
 
+      ## Enable caching of KV mount metadata from Vault. This reduces Vault API calls
+      ## by fetching mount information once and reusing it for subsequent lookups.
+      ##
+      enableKvMountCache: false
+
     ## Configuration for using Credhub as a credential manager.
     ## Ref: https://concourse-ci.org/credhub-credential-manager.html
     ##
@@ -1239,6 +1250,21 @@ concourse:
           ##
           group:
 
+        ## Authentication (Main Team) (Gitea)
+        ##
+        gitea:
+          ## Comma-separated allow list of Gitea users.
+          ##
+          user:
+
+          ## Comma-separated allow list of Gitea orgs.
+          ##
+          org:
+
+          ## Comma-separated allow list of Gitea teams.
+          ##
+          team:
+
         ## Authentication (Main Team) (LDAP)
         ##
         ldap:
@@ -1339,6 +1365,19 @@ concourse:
         ## Hostname of Gitlab Enterprise deployment (Include scheme, No trailing slash)
         ##
         host:
+
+      ## Authentication (Gitea)
+      gitea:
+        enabled: false
+
+        ## Hostname of Gitea deployment (Include scheme, No trailing slash)
+        ##
+        host:
+
+        ## The auth provider name displayed to users on the login page.
+        ## Defaults to "Gitea"
+        ##
+        displayName:
 
       ## Authentication (LDAP)
       ldap:
@@ -3292,10 +3331,15 @@ secrets:
   postgresClientCert:
   postgresClientKey:
 
-  ## Secrets for DB encryption
+  ## Pasphrase for DB encryption. A 16 or 32 byte key that will be used to
+  ## generate an AES key to encrypt sensitive data in the DB.
   ##
   encryptionKey:
+  encryptionKeyBase64:
+  encryptionKeyHex:
   oldEncryptionKey:
+  oldEncryptionKeyBase64:
+  oldEncryptionKeyHex:
 
   ## Secrets for SSM AWS access
   ##
