@@ -1107,7 +1107,7 @@ spec:
             {{- end }}
             {{- if .Values.concourse.web.auth.mainTeam.gitea.team }}
             - name: CONCOURSE_MAIN_TEAM_GITEA_TEAM
-              value: {{ .Values.concourse.web.auth.mainTeam.github.team | quote }}
+              value: {{ .Values.concourse.web.auth.mainTeam.gitea.team | quote }}
             {{- end }}
             {{- if .Values.concourse.web.auth.mainTeam.ldap.user }}
             - name: CONCOURSE_MAIN_TEAM_LDAP_USER
