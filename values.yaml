@@ -3331,7 +3331,7 @@ secrets:
   postgresClientCert:
   postgresClientKey:
 
-  ## Pasphrase for DB encryption. A 16 or 32 byte key that will be used to
+  ## Passphrase for DB encryption. A 16 or 32 byte key that will be used to
   ## generate an AES key to encrypt sensitive data in the DB.
   ##
   encryptionKey:
